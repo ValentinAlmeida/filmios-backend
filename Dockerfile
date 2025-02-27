@@ -1,7 +1,5 @@
 FROM php:8.4-apache
 
-LABEL authors="tarcisio@hrzon.com.br"
-
 ARG app_key
 ARG jwt_secret
 

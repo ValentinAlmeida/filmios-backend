@@ -1,7 +1,5 @@
 FROM php:8.4-apache
 
-LABEL authors="tarcisio@hrzon.com.br"
-
 ENV DB_CONNECTION=pgsql
 
 RUN apt-get update && apt-get install -y \
