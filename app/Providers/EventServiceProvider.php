@@ -32,10 +32,6 @@ class EventServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        EstablishmentActivityModel::observe(EstablishmentActivityObserver::class);
-        EstablishmentOpeningHoursModel::observe(EstablishmentOpeningHoursObserver::class);
-        EstablishmentModel::observe(EstablishmentObserver::class);
-        RequestModel::observe(RequestObserver::class);
     }
 
     /**

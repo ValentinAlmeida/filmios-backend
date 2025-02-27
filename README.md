@@ -1,15 +1,15 @@
-# 🌟 Projeto VISA: Configuração Simplificada 🚀
+# 🌟 Projeto filmios: Configuração Simplificada 🚀
 
-Bem-vindo ao guia de configuração do Projeto VISA! Aqui você encontrará as etapas necessárias para configurar e iniciar rapidamente o ambiente Docker. Vamos nessa! 💪
+Bem-vindo ao guia de configuração do Projeto filmios! Aqui você encontrará as etapas necessárias para configurar e iniciar rapidamente o ambiente Docker. Vamos nessa! 💪
 
 ---
 
 ## 📦 1. Crie a Imagem do Backend
 
-Vamos começar construindo a imagem Docker para o backend! 🛠️
+Vamos começar construindo a imagem Docker para o backend! Na raiz do projeto rode 🛠️
 
 ```bash
-docker build -t visa-backend -f $HOME/projects/visa-backend/Dockerfile.dev .
+docker build -t filmios-backend -f Dockerfile.dev .
 ```
 
 ---
@@ -19,7 +19,7 @@ docker build -t visa-backend -f $HOME/projects/visa-backend/Dockerfile.dev .
 Hora de iniciar o backend! Ele será acessível na porta **8000**. 🌐
 
 ```bash
-docker run --name visa-backend -d -p 8000:8000 -v $HOME/.ssh:/root/.ssh -v $(pwd):/application visa-backend
+docker run --name filmios-backend -d -p 8000:8000 -v $HOME/.ssh:/root/.ssh -v $(pwd):/application filmios-backend
 ```
 
 ---
@@ -29,7 +29,7 @@ docker run --name visa-backend -d -p 8000:8000 -v $HOME/.ssh:/root/.ssh -v $(pwd
 Vamos criar uma rede dedicada para nossos containers se comunicarem. 📡
 
 ```bash
-docker network create visa-network
+docker network create filmios-network
 ```
 
 ---
@@ -40,7 +40,7 @@ docker network create visa-network
 Configure e inicie o banco de dados com as credenciais necessárias. 🔒
 
 ```bash
-docker run -d --name db-visa --net visa-network -e POSTGRES_PASSWORD=root postgres
+docker run -d --name db-filmios --net filmios-network -e POSTGRES_PASSWORD=root postgres
 ```
 
 ---
@@ -50,7 +50,7 @@ docker run -d --name db-visa --net visa-network -e POSTGRES_PASSWORD=root postgr
 Agora, conecte o backend à rede criada no passo 3. 🚦
 
 ```bash
-docker network connect visa-network visa-backend
+docker network connect filmios-network filmios-backend
 ```
 
 ---

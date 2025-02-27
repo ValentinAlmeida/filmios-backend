@@ -1,11 +1,11 @@
 version: '3.8'
 
 services:
-  visa-backend:
+  filmios-backend:
     build:
       context: .
       dockerfile: Dockerfile.dev
-    container_name: visa-backend
+    container_name: filmios-backend
     ports:
       - "8000:8000"
     volumes:
@@ -14,29 +14,29 @@ services:
     environment:
       DB_CONNECTION: pgsql
     networks:
-      - visa-network
+      - filmios-network
 
-  visa-frontend:
-    image: node
-    container_name: visa-frontend
-    working_dir: /visa-frontend
-    ports:
-      - "5173:5173"
-    volumes:
-      - $HOME/.ssh:/root/.ssh
-      - $HOME/project/visa-frontend:/visa-frontend
-    command: ["npm", "run", "dev", "--", "--host"]
-    networks:
-      - visa-network
+  # filmios-frontend:
+  #   image: node
+  #   container_name: filmios-frontend
+  #   working_dir: /filmios-frontend
+  #   ports:
+  #     - "5173:5173"
+  #   volumes:
+  #     - $HOME/.ssh:/root/.ssh
+  #     - $HOME/project/filmios-frontend:/filmios-frontend
+  #   command: ["npm", "run", "dev", "--", "--host"]
+  #   networks:
+  #     - filmios-network
 
-  db-visa:
+  db-filmios:
     image: postgres
-    container_name: db-visa
+    container_name: db-filmios
     environment:
       POSTGRES_PASSWORD: root
     networks:
-      - visa-network
+      - filmios-network
 
 networks:
-  visa-network:
+  filmios-network:
     driver: bridge

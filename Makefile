@@ -1,7 +1,6 @@
 # Constantes
-SERVER=visa-backend
-DATABASE=db-visa
-FRONT=visa-frontend
+SERVER=filmios-backend
+DATABASE=db-filmios
 
 .PHONY: help test start serve serve-front queue stop restart cache migration migrationf seed-generate
 

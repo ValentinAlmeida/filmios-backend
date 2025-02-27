@@ -37,7 +37,7 @@ class SendPasswordNotification extends Notification
     public function toMail(object $notifiable): MailMessage
     {
         return (new MailMessage)
-            ->subject('Visa')
+            ->subject('Filmios')
             ->greeting($this->user->name)
             ->line('Aqui está sua nova senha temporária para acessar sua conta:')
             ->line('senha temporaria: '.$this->password)
