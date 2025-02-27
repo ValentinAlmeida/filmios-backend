@@ -1,0 +1,7 @@
+#!/bin/bash
+
+php artisan queue:work &
+
+apache2ctl -D FOREGROUND
+
+php artisan schedule:work

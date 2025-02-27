@@ -1,0 +1,57 @@
+image: jitesoft/composer:8.2
+
+clone:
+  depth: full
+
+definitions:
+  steps:
+    - step: &SecurityScan
+        name: 'Escaneamento de Segurança'
+        script:
+          - pipe: sonarsource/sonarqube-scan:1.0.0
+            variables:
+              SONAR_HOST_URL: ${SONAR_HOST_URL}
+              SONAR_TOKEN: ${SONAR_TOKEN}
+    - step: &QualityScan
+        name: 'Escaneamento de Qualidade'
+        max-time: 5
+        script:
+          - pipe: sonarsource/sonarqube-quality-gate:1.1.0
+            variables:
+              SONAR_TOKEN: ${SONAR_TOKEN}
+    - step: &Dependencies
+        name: 'Instalação de dependências'
+        script:
+          - composer install --ignore-platform-reqs
+        artifacts:
+          - vendor/**
+    - step: &DockerImage
+        name: 'Imagem Docker'
+        caches:
+          - docker
+        services:
+          - docker
+        script:
+          - docker build --build-arg app_key=${APP_KEY} --build-arg jwt_secret=${JWT_SECRET} -t ${DOCKER_REGISTRY}/visa/backend:${BITBUCKET_TAG} -t ${DOCKER_REGISTRY}/visa/backend:${ENVIRONMENT} .
+          - docker login -p ${DOCKER_REGISTRY_PASS} -u ${DOCKER_REGISTRY_USER} ${DOCKER_REGISTRY}
+          - docker push ${DOCKER_REGISTRY}/visa/backend:${ENVIRONMENT}
+          - docker push ${DOCKER_REGISTRY}/visa/backend:${BITBUCKET_TAG}
+  caches:
+    sonar: ~/.sonar
+
+pipelines:
+  tags:
+    '*-alfa':
+      - step: *Dependencies
+      - step:
+          <<: *SecurityScan
+          caches:
+            - sonar
+      - step:
+          <<: *QualityScan
+          caches:
+            - sonar
+      - step:
+          <<: *DockerImage
+          deployment: Alfa Image
+

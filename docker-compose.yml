@@ -1,0 +1,42 @@
+version: '3.8'
+
+services:
+  visa-backend:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    container_name: visa-backend
+    ports:
+      - "8000:8000"
+    volumes:
+      - $HOME/.ssh:/root/.ssh
+      - .:/application
+    environment:
+      DB_CONNECTION: pgsql
+    networks:
+      - visa-network
+
+  visa-frontend:
+    image: node
+    container_name: visa-frontend
+    working_dir: /visa-frontend
+    ports:
+      - "5173:5173"
+    volumes:
+      - $HOME/.ssh:/root/.ssh
+      - $HOME/project/visa-frontend:/visa-frontend
+    command: ["npm", "run", "dev", "--", "--host"]
+    networks:
+      - visa-network
+
+  db-visa:
+    image: postgres
+    container_name: db-visa
+    environment:
+      POSTGRES_PASSWORD: root
+    networks:
+      - visa-network
+
+networks:
+  visa-network:
+    driver: bridge

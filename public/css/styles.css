@@ -1,0 +1,95 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 20px;
+    background-color: #f4f4f4;
+}
+
+.container {
+    max-width: 800px;
+    margin: auto;
+    padding: 20px 100px 20px 100px;
+    background: white;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+
+header {
+    text-align: center;
+    margin-top: 20px;
+    margin-bottom: 40px;
+}
+
+h2 {
+    margin: 0;
+    padding: 0;
+    color: #000;
+    font-size: medium;
+    font-weight: 1000;
+}
+
+.dados-empresa {
+    margin-bottom: 80px;
+}
+
+
+.declaracao {
+    text-align: center;
+    margin-bottom: 60px;
+}
+
+.declaracao p {
+    line-height: 1.5em;
+    text-indent: 1.5em;
+    text-align: justify;
+}
+
+.declaracao h2 {
+    margin-bottom: 20px;
+}
+
+.atividades {
+    margin-bottom: 100px;
+}
+
+.atividades p {
+    text-align: justify;
+    line-height: 1.5em;
+    font-size: 15px;
+    margin-bottom: 20px;
+}
+
+.dados-empresa p,
+.declaracao p {
+    margin: 5px 0;
+}
+
+footer p {
+    text-align: center;
+    margin: 5px 0;
+}
+
+.notas {
+    display: grid;
+    grid-template-columns: 5fr 1fr;
+    border: 2px solid #000;
+    margin: 100px 0px 20px 0px;
+    font-size: 12px;
+    color: #000;
+}
+
+.notas p {
+    padding: 10px;
+    text-align: left;
+}
+
+.notas img {
+    width: 100px;
+}
+
+table,
+th,
+td {
+    border: 2px solid #ccc;
+    border-collapse: collapse;
+    padding: 5px
+}
