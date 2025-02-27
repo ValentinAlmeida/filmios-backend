@@ -32,16 +32,12 @@ class UserService implements UserServiceInterface
 
         $createUser = new CreateUserDTO(
             $data->login ?? $usuario->getLogin(),
-            $data->cpf ?? $usuario->getCpf(),
             $data->password ?? $usuario->getPassword(),
             $data->email ?? $usuario->getEmail(),
-            $data->profileRef ?? $usuario->getProfileRef(),
-            $data->localitiesRef ?? $usuario->getLocalitiesRef(),
             $data->active ?? $usuario->isActive(),
             $data->blocked ?? $usuario->isBlocked(),
             null,
             $data->name ?? $usuario->getName(),
-            $data->telephone ?? $usuario->getTelephone(),
         );
 
         $this->userRepo->update($id, UserEntity::create($createUser));

@@ -3,9 +3,7 @@
 namespace App\Entities\Mapper;
 
 use App\Core\DTO\RestoreUserDTO;
-use App\Entities\DomainEntity;
 use App\Entities\UserEntity;
-use App\Models\LocalityModel;
 use App\Models\UserModel;
 use Carbon\Carbon;
 
@@ -15,16 +13,13 @@ class UserMapper
     {
         $restoreUser = new RestoreUserDTO(
             $model->login,
-            $model->cpf,
             $model->password,
             $model->email,
-            $model->profile ? ProfileMapper::parse($model->profile) : null,
-            $model->localities ? $model->localities()->get()->map(fn (LocalityModel $localityModel) => DomainEntity::create($localityModel->id, $localityModel->description))->toArray() : null,
+            $model->name,
             $model->active,
             $model->block,
             Carbon::create($model->created_at),
-            $model->name,
-            $model->telephone
+            Carbon::create($model->updated_at),
         );
 
         return UserEntity::restore($restoreUser, $model->id);
@@ -40,17 +35,14 @@ class UserMapper
     private static function restoreUser(array $mixed): UserEntity
     {
         $restoreUser = new RestoreUserDTO(
+            $mixed['login'],
             null,
-            null,
-            null,
-            null,
-            empty($mixed['profile']) ? null : ProfileMapper::parseArrayToEntity($mixed['profile']),
-            empty($mixed['localities']) ? null : DomainMapper::parseArrayToEntity($mixed['localities']),
+            $mixed['email'],
+            $mixed['name'],
             $mixed['active'],
             $mixed['block'],
             Carbon::create($mixed['created_at']),
-            null,
-            null,
+            Carbon::create($mixed['updated_at']),
         );
 
         return UserEntity::restore($restoreUser, $mixed['id']);

@@ -28,17 +28,14 @@ Route::post('/recover-password', [AuthenticationController::class, 'recoverPassw
 Route::put('/reset-password', [AuthenticationController::class, 'resetPassword'])->middleware('recovery.user');
 
 Route::prefix('/users')->group(function(){
-    Route::post('/noProfile', [UserController::class, 'createNoProfile']);
-    Route::get('/logged', [UserController::class, 'searchUserLogged'])->middleware('auth');
+    Route::post('/', [UserController::class, 'createNoProfile']);
 });
 
 Route::middleware(['auth'])->group(function () {
     Route::prefix('/users')->middleware('feature.permission')->group(function () {
-        Route::get('/', [UserController::class, 'search']);
-        Route::post('/', [UserController::class, 'create']);
         Route::prefix('/{id}')->group(function () {
+            Route::get('/logged', [UserController::class, 'searchUserLogged']);
             Route::delete('/', [UserController::class, 'delete']);
-            Route::get('/', [UserController::class, 'findById']);
             Route::put('/modify-state', [UserController::class, 'modifyState']);
             Route::put('/', [UserController::class, 'update']);
             Route::put('/unblock', [AuthenticationController::class, 'unblockAccess']);

@@ -3,14 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Contracts\Services\AuthenticationServiceInterface;
-use App\Core\VO\TokenJwt;
-use App\Exceptions\AuthenticationException;
 use App\Http\Requests\AuthenticateRequest;
 use App\Http\Requests\RecoveryPasswordRequest;
 use App\Http\Requests\RefreshTokenRequest;
 use App\Http\Requests\ResetPasswordRequest;
 use App\Infra\Helpers\TokenHelper;
-use App\Support\Serializers\UserSerializer;
 
 class AuthenticationController extends Controller
 {

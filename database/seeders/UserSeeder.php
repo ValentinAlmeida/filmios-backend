@@ -2,7 +2,6 @@
 
 namespace Database\Seeders;
 
-use App\Core\Enumerations\ProfileEnum;
 use App\Models\UserModel;
 use Carbon\Carbon;
 use Illuminate\Database\Seeder;
@@ -19,13 +18,10 @@ class UserSeeder extends Seeder
 
         $usuarioData = [
             UserModel::LOGIN => '12345678901',
-            UserModel::CPF => '12345678901',
             UserModel::EMAIL => 'john.doe@example.com',
             UserModel::PASSWORD => Hash::make('12345678'),
-            UserModel::PROFILE_KEY => ProfileEnum::ADMINISTRADOR->value,
             UserModel::ACTIVE => 1,
             UserModel::NAME => 'John Vlogs',
-            UserModel::TELEPHONE => '71981903806',
             UserModel::BLOCK => 0,
             UserModel::CREATED_AT => $now,
             UserModel::UPDATED_AT => $now,

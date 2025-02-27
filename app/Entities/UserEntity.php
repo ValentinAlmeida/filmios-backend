@@ -12,8 +12,6 @@ use DateTimeInterface;
 
 class UserEntity extends Entity implements Authenticable
 {
-    private readonly ?string $profileRef;
-    private readonly ?array $localitiesRef;
     private ?string $url;
     private UserProperty $props;
 
@@ -32,23 +30,17 @@ class UserEntity extends Entity implements Authenticable
         CreateUserDTO $createUserDTO
     ): self {
         $props = new UserProperty(
-            $createUserDTO->login,
-            $createUserDTO->cpf,
             $createUserDTO->password,
             $createUserDTO->email,
+            $createUserDTO->login,
+            $createUserDTO->name,
             $createUserDTO->blocked,
             $createUserDTO->active,
             null,
             null,
-            null,
-            $createUserDTO->name,
-            $createUserDTO->telephone
         );
 
         $user = new self($props);
-
-        $user->setProfileRef($createUserDTO->profileRef);
-        $user->setLocalitiesRef($createUserDTO->localitiesRef);
         $user->setUrl($createUserDTO->url);
 
         return $user;
@@ -59,58 +51,17 @@ class UserEntity extends Entity implements Authenticable
         int $id
     ): self {
         $props = new UserProperty(
-            $restoreUserDTO->login,
-            $restoreUserDTO->cpf,
             $restoreUserDTO->password,
             $restoreUserDTO->email,
+            $restoreUserDTO->login,
+            $restoreUserDTO->name,
             $restoreUserDTO->blocked,
             $restoreUserDTO->active,
             $restoreUserDTO->created_at,
-            $restoreUserDTO->profile,
-            $restoreUserDTO->localities,
-            $restoreUserDTO->name,
-            $restoreUserDTO->telephone
+            $restoreUserDTO->updated_at
         );
 
-        $user = new self($props, Identifier::create($id));
-
-        $user->setProfileRef($restoreUserDTO->profile?->getKey());
-        $user->setLocalitiesRef($restoreUserDTO->localities ? array_map(
-            fn (?DomainEntity $locality) => $locality?->getIdentifier()->getValue(),
-            $restoreUserDTO->localities
-        ) : null);
-
-        return $user;
-    }
-
-    public function setProfileRef(?string $profileRef)
-    {
-        $this->profileRef = $profileRef;
-    }
-
-    public function setLocalitiesRef(?array $localitiesRef)
-    {
-        $this->localitiesRef = $localitiesRef;
-    }
-
-    public function setProfile(?DomainEntity $profile)
-    {
-        $this->props->profile = $profile;
-    }
-
-    public function setLocalities(?array $localities)
-    {
-        $this->props->localities = $localities;
-    }
-
-    public function getProfileRef(): ?string
-    {
-        return $this->profileRef;
-    }
-
-    public function getLocalitiesRef(): ?array
-    {
-        return $this->localitiesRef;
+        return new self($props, Identifier::create($id));
     }
 
     public function getEmail(): ?string
@@ -128,24 +79,19 @@ class UserEntity extends Entity implements Authenticable
         return $this->props->login;
     }
 
-    public function getTelephone(): ?string
-    {
-        return $this->props->telephone;
-    }
-
     public function getCreatedAt(): ?DateTimeInterface
     {
         return $this->props->created_at;
     }
 
+    public function getUpdatedAt(): ?DateTimeInterface
+    {
+        return $this->props->updated_at;
+    }
+
     public function getPassword(): ?string
     {
         return $this->props->password;
-    }
-
-    public function getCpf(): ?string
-    {
-        return $this->props->cpf;
     }
 
     public function isBlocked(): bool
@@ -166,15 +112,5 @@ class UserEntity extends Entity implements Authenticable
     public function getUrl(): ?string
     {
         return $this->url;
-    }
-
-    public function getProfile(): ?ProfileEntity
-    {
-        return $this->props->profile;
-    }
-
-    public function getLocalities(): ?array
-    {
-        return $this->props->localities;
     }
 }

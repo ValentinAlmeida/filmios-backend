@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Contracts\Services\UserServiceInterface;
-use App\Http\Requests\CreateUserNoProfileRequest;
 use App\Http\Requests\CreateUserRequest;
 use App\Http\Requests\SearchUserRequest;
 use App\Http\Requests\UpdateUserRequest;
@@ -14,14 +13,7 @@ class UserController extends Controller
 {
     public function __construct(private readonly UserServiceInterface $userService){}
 
-    public function create(CreateUserRequest $request)
-    {
-        $this->userService->create($request->getData());
-
-        return response(null, 201);
-    }
-
-    public function createNoProfile(CreateUserNoProfileRequest $request)
+    public function createNoProfile(CreateUserRequest $request)
     {
         $this->userService->create($request->getData());
 

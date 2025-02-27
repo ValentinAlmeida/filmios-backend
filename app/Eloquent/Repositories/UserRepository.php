@@ -25,18 +25,13 @@ class UserRepository implements UserRepositoryInterface
         $password = RandomHelper::getNewPassword();
 
         $userModel = UserModel::create([
-            UserModel::CPF => $data->getCpf(),
             UserModel::NAME => $data->getName(),
             UserModel::EMAIL => $data->getEmail(),
-            UserModel::PROFILE_KEY => $data->getProfileRef(),
-            UserModel::TELEPHONE => $data->getTelephone(),
             UserModel::LOGIN => $data->getLogin(),
             UserModel::PASSWORD => Hash::make($password),
-            UserModel::ACTIVE => $data->getProfileRef() ? 1 : 0,
+            UserModel::ACTIVE => 1,
             UserModel::BLOCK => 0,
         ]);
-
-        $userModel->localities()->attach($data->getLocalitiesRef());
 
         $token = TokenJwt::generate('recovery_password', UserSerializer::parseEntityDecode(UserMapper::parseModelToEntity($userModel)));
 
@@ -49,24 +44,12 @@ class UserRepository implements UserRepositoryInterface
     {
         $query = UserModel::query();
 
-        if ($filter->hasCpf()) {
-            $query = $query->whereLike(UserModel::CPF, like($filter->cpf));
-        }
-
-        if ($filter->hasProfileKey()) {
-            $query = $query->whereLike(UserModel::PROFILE_KEY, like($filter->profileKey));
-        }
-
         if ($filter->hasLogin()) {
             $query = $query->whereLike(UserModel::LOGIN, like($filter->login));
         }
 
         if ($filter->hasEmail()) {
             $query = $query->whereLike(UserModel::EMAIL, like($filter->email));
-        }
-
-        if ($filter->hasTelephone()) {
-            $query = $query->whereLike(UserModel::TELEPHONE, like($filter->telephone));
         }
 
         if ($filter->hasBlock()) {
@@ -113,18 +96,13 @@ class UserRepository implements UserRepositoryInterface
         throw_if(!$user, UserException::notFound());
 
         $user->update([
-            UserModel::CPF => $data->getCpf(),
             UserModel::EMAIL => $data->getEmail(),
-            UserModel::PROFILE_KEY => $data->getProfileRef(),
             UserModel::LOGIN => $data->getLogin(),
             UserModel::ACTIVE => $data->isActive(),
             UserModel::BLOCK => $data->isBlocked(),
-            UserModel::TELEPHONE => $data->getTelephone(),
             UserModel::PASSWORD => $data->getPassword(),
             UserModel::NAME => $data->getName(),
         ]);
-
-        $user->localities()->sync($data->getLocalitiesRef());
     }
 
     public function delete(int $id): void
