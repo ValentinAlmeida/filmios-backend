@@ -28,8 +28,8 @@ class UserSeeder extends Seeder
         ];
 
         UserModel::updateOrCreate(
-            [UserModel::CPF => $usuarioData[UserModel::CPF]],
+            [UserModel::LOGIN => $usuarioData[UserModel::LOGIN]],
             $usuarioData
-        )->localities()->sync([1, 2]);
+        );
     }
 }

@@ -26,25 +26,14 @@ Content-Type: application/json
 ### **📤 Exemplo de Resposta**  
 ```json
 {
-    "id": 1,
+    "id": 2,
     "login": "12345678901",
-    "cpf": "12345678901",
     "name": "John Vlogs",
     "email": "john.doe@example.com",
-    "telephone": "71981903806",
     "block": false,
     "active": true,
-    "localities": [
-        {
-            "id": 1,
-            "description": "Salvador"
-        },
-        {
-            "id": 2,
-            "description": "Lauro de Freitas"
-        }
-    ],
-    "created_at": "2025-02-06T13:38:28.000000Z"
+    "created_at": "2025-02-27T23:12:47.000000Z",
+    "updated_at": "2025-02-27T23:12:47.000000Z"
 }
 ```
 

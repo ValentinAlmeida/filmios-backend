@@ -32,13 +32,8 @@ Route::prefix('/users')->group(function(){
 });
 
 Route::middleware(['auth'])->group(function () {
-    Route::prefix('/users')->middleware('feature.permission')->group(function () {
-        Route::prefix('/{id}')->group(function () {
-            Route::get('/logged', [UserController::class, 'searchUserLogged']);
-            Route::delete('/', [UserController::class, 'delete']);
-            Route::put('/modify-state', [UserController::class, 'modifyState']);
-            Route::put('/', [UserController::class, 'update']);
-            Route::put('/unblock', [AuthenticationController::class, 'unblockAccess']);
-        });
+    Route::prefix('/users')->group(function () {
+        Route::get('/logged', [UserController::class, 'searchUserLogged']);
+        Route::put('/logged', [UserController::class, 'update']);
     });
 });

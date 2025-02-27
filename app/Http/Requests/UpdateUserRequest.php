@@ -32,8 +32,6 @@ class UpdateUserRequest extends ApiRequest
         $dto->login = value_or_null($this->input('login'));
         $dto->name = value_or_null($this->input('name'));
         $dto->email = value_or_null($this->input('email'));
-        $dto->active = bool_or_null($this->input('active'));
-        $dto->blocked = bool_or_null($this->input('blocked'));
 
         return $dto;
     }

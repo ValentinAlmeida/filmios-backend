@@ -40,9 +40,9 @@ class UserController extends Controller
         $this->userService->modifyState($id);
     }
 
-    public function update(int $id, UpdateUserRequest $request)
+    public function update(UpdateUserRequest $request)
     {
-        $this->userService->update($id, $request->getData());
+        $this->userService->update(app('user')->getIdentifier()->getValue(), $request->getData());
 
         return response(null, 204);
     }
