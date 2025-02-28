@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('list_tvshow', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('list_id')->on('list')->onDelete('set null');
             $table->boolean('adult')->nullable();
             $table->boolean('assisted')->nullable();
             $table->boolean('favorited')->nullable();

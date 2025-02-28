@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('list_movie', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('list_id')->on('list')->onDelete('set null');
             $table->string('backdrop_path')->nullable();
             $table->string('title')->nullable();
             $table->string('overview')->nullable();

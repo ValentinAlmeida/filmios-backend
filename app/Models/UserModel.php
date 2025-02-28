@@ -64,4 +64,9 @@ class UserModel extends Model implements Authenticatable
     {
         //
     }
+
+    public function list()
+    {
+        return $this->hasMany(ListModel::class, ListModel::USER_ID);
+    }
 }
